@@ -1,0 +1,16 @@
+read_verilog -sv digital/RNG.v
+read_verilog -sv digital/MCCAdder.v
+read_verilog -sv digital/MCCBench.v
+read_verilog -sv digital/NormalAdder.v
+read_verilog -sv digital/NormalBench.v
+
+
+read_verilog -lib yosys/prim_cells.v
+
+proc;; memory;; techmap;;
+
+dfflibmap -liberty yosys/prim_cells.lib
+abc -liberty yosys/prim_cells.lib;;
+
+# write_verilog sender_lwc.v
+write_spice bench.mod

@@ -1,0 +1,40 @@
+diff -ru simplesim-arm-src/machine.h paolo/machine.h
+--- simplesim-arm-src/machine.h 2005-11-11 14:58:41.000000000 +0100
++++ paolo/machine.h     2005-11-14 10:08:02.000000000 +0100
+@@ -317,9 +317,12 @@
+ 
+ #endif
+ 
+-/* fetch an instruction */
++/* fetch an instruction.  the strange XOR is a hack to turn BX instructions
++   into MOV PC, Rnn.  The encoding should be changed from c12FFF1s (where
++   c is the condition and s is the source) to c1A0F00s.  */
+ #define MD_FETCH_INST(INST, MEM, PC)                                   \
+-  { (INST) = MEM_READ_WORD((MEM), (PC)); }
++  { (INST) = MEM_READ_WORD((MEM), (PC)),                               \
++    (INST) ^= (((INST) & 0xFFFFFF0) == 0x12FFF10) ? 0x8F0F10 : 0; }
+ 
+ /*
+  * target-dependent loader module configuration
+diff -ru simplesim-arm/target-arm/arm.c src/target-arm/arm.c
+--- simplesim-arm/target-arm/arm.c	2000-11-29 15:53:54.000000000 +0100
++++ src/target-arm/arm.c	2005-11-10 10:31:04.000000000 +0100
+@@ -1161,7 +1161,7 @@
+ 			   /* dest */(FD)+i,
+ 			   /* src1 */rn,
+ 			   /* src2 */0, 0, 0,
+-			   /* src2 */sign, i*8);
++			   /* src2 */1, i*8);
+ #if 0
+ 	    flow[nuops].op = (sign == 1) ? STFD_PU : STFD_P;
+ 	    flow[nuops++].inst =
+@@ -1216,7 +1216,7 @@
+ 			   /* dest */(FD)+i,
+ 			   /* src1 */rn,
+ 			   /* src2 */0, 0, 0,
+-			   /* src2 */sign, i*8);
++			   /* src2 */1, i*8); 
+ #if 0
+ 	    flow[nuops].op = (sign == 1) ? LDFD_PUL : LDFD_PL;
+ 	    flow[nuops++].inst =
+

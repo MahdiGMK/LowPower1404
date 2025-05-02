@@ -1,0 +1,55 @@
+#endif
+#endif
+#undef STM_S_IMPL 
+#undef LDM_SL_IMPL
+#undef LDM_SWL_IMPL 
+#undef STM_US_IMPL
+#undef LDM_USL_IMPL
+#undef LDM_USWL_IMPL
+#undef LDM_PUWL_IMPL
+#undef STM_PS_IMPL
+#undef LDM_PSL_IMPL
+#undef LDM_PSWL_IMPL
+#undef STM_PUS_IMPL
+#undef LDM_PUSL_IMPL
+#undef LDM_PUSWL_IMPL
+#endif
+#undef STM_S_IMPL 
+#undef LDM_SL_IMPL
+#undef LDM_SWL_IMPL 
+#undef STM_US_IMPL
+#undef LDM_USL_IMPL
+#undef LDM_USWL_IMPL
+#undef LDM_PUWL_IMPL
+#undef STM_PS_IMPL
+#undef LDM_PSL_IMPL
+#undef LDM_PSWL_IMPL
+#undef STM_PUS_IMPL
+#undef LDM_PUSL_IMPL
+#undef LDM_PUSWL_IMPL
+CONNECT(MSRTST_LINK)
+
+#define TST1_IMPL							\
+  {									\
+    if (COND_VALID(PSR))						\
+      {									\
+	/* test but don't set flags, nada... */				\
+      }									\
+  }
+DEFINST(TST1,			0x7f00,
+	"tst%c",		"%n,%m",
+	IntALU,			F_ICOMP,
+	DNA, DNA, DNA,		DCOND, DNA, DNA, DNA)
+
+#define MSR_SPSR_IMPL							\
+  {									\
+    if (COND_VALID(PSR))						\
+      {									\
+	/* FIXME: todo... */						\
+	DECLARE_FAULT(md_fault_unimpl);					\
+      }									\
+  }
+DEFINST(MSR_SPSR,		0x0f,
+	"msr",			"spsr,%d",
+	IntALU,			F_ICOMP,
+	DNA, DNA, DNA,		DCOND, DNA, DNA, DNA)

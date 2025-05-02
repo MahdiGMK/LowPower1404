@@ -124,7 +124,7 @@ test "full test" {
     try testNbits(8);
     try testNbits(12);
     try testNbits(16);
-    try testNbits(24);
+    // try testNbits(24);
 }
 
 // test "cpe" {

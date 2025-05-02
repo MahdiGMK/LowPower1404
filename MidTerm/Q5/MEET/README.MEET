@@ -1,0 +1,12 @@
+Change log
+1.1:
+	- build.sh and run.sh scripts added for simpler build and run
+
+1.0: 
+	- Initial release
+
+ MEET (Microcontroller Energy Estimation Tool) is an energy profiler tool for AT91SAM7x256 microcontroller developed by Mostafa Bazzaz at Embedded Systems research laboratory of Sharif University of Technology, Iran (see http://esrlab.ce.sharif.ir/).
+The program is based on sim-profile which is a part of SimpleScalar simulator suite (see http://www.simplescalar.com). MEET receives an ARM7TDMI compatible binary image and simulates the program at instruction level. The reported statistics are same as original sim-profile plus 5 new counters for energy estimation. Please refer to tutorial.pdf for a detailed explanation of how to use MEET.
+
+Best regards,
+Mostafa Bazzaz (bazzaz[AT]ce.sharif.ir)

@@ -1,0 +1,9 @@
+sim_num_insn                 237064 # total number of instructions executed after analysis started
+sim_num_refs                  47195 # total number of loads and stores executed
+sim_num_loads                 35372 # total number of read memory accesses
+sim_num_flash_loads            2002 # total number of Flash read memory accesses
+sim_num_sram_loads            33370 # total number of SRAM read memory accesses
+sim_num_stores                21227 # total number of write memory accesses
+sim_total_energy        628401.5625 # total energy consumption (nJ)
+sim_elapsed_time                  1 # total simulation time in seconds
+sim_inst_rate           237064.0000 # simulation speed (in insts/sec)
