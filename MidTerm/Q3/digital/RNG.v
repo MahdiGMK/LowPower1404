@@ -17,35 +17,26 @@ endmodule
 module INPGEN (
     input clk,
     input rst,
-    output [15:0] a,
-    output [15:0] b
+    output [127:0] a,
+    output [127:0] b
 );
-    RNG _0 (
-        .clk (clk),
-        .rst (rst),
-        .seed(8'b01010101),
-        .rnd (a[7:0])
-    );
-
-    RNG _1 (
-        .clk (clk),
-        .rst (rst),
-        .seed(8'b01011010),
-        .rnd (b[7:0])
-    );
-
-    RNG _2 (
-        .clk (clk),
-        .rst (rst),
-        .seed(8'b01101010),
-        .rnd (a[15:8])
-    );
-
-    RNG _3 (
-        .clk (clk),
-        .rst (rst),
-        .seed(8'b10101011),
-        .rnd (b[15:8])
-    );
-
+    genvar i;
+    generate
+        for (i = 0; i < 128 / 8; i += 1) begin : gen_rng
+            wire [7:0] aseed = 8'b01010101 ^ (i * 71269);
+            wire [7:0] bseed = 8'b01011010 ^ (i * 190873);
+            RNG _a (
+                .clk (clk),
+                .rst (rst),
+                .seed(aseed),
+                .rnd (a[i*8+:8])
+            );
+            RNG _b (
+                .clk (clk),
+                .rst (rst),
+                .seed(bseed),
+                .rnd (b[i*8+:8])
+            );
+        end
+    endgenerate
 endmodule
