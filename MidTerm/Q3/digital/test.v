@@ -111,6 +111,41 @@ module test_ShaddMul;
     end
 endmodule
 
+module test_KaratMul;
+    reg clk, rst, strt;
+    reg [127:0] a, b;
+    wire signed [255:0] res;
+    wire done;
+    KaratMul _mul (
+        .clk(clk),
+        .rst(rst),
+        .strt(strt),
+        .a(a),
+        .b(b),
+        .res(res),
+        .done(done)
+    );
+    initial begin
+        clk = 0;
+        forever #1 clk = ~clk;
+    end
+    int i, j;
+    initial begin
+        rst = 1;
+        #2 rst = 0;
+        for (i = -128; i < 128; i++)
+        for (j = -128; j < 128; j++) begin
+            a = i;
+            b = j;
+            strt = 1;
+            #2 strt = 0;
+            #20 assert (done);
+            assert (res == (i * j));
+        end
+        $finish();
+    end
+endmodule
+
 module test_INPGEN;
     wire [127:0] a, b;
     reg clk, rst;
