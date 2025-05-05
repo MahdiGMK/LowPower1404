@@ -1,4 +1,4 @@
-.title "RC Adder CIRC"
+.title "MCC1 TEST"
 
 * supply voltages
 .global Vss Vdd
@@ -22,17 +22,20 @@ Vmeasin Vmeasin Vdd DC 0
 Vclk clk 0 PULSE(0 3 1 0.1 0.1 0.8 2)
 Vrst rst 0 PULSE(0 3 0.5 0.1 0.1 2.9 40)
 
-Xadder clk rst x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 NormalBench
+* Xadder clk rst x0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12 x13 x14 x15 x16 MCCBench
+Xrng clk rst Vss Vdd Vss Vdd Vss Vdd Vss Vdd xa xb x_cin x3 x4 x5 x6 x7 RNG
+Xmcc1 xa xb x_cin xs x_cout MCC1
 
-.tran 0.1 40
-.save i(Vmeasin) v(Vmeasin)
+.tran 0.05 40
+* .save i(Vmeasin) v(Vmeasin)
 * .save v(Vmeasin)
 * .probe p(counter)
 * .save counter:power
 .control
 set filetype=ascii
-* run
-* plot v(clk) v(x0)/3+10 v(x1)/3+11 v(x2)/3+12 v(x3)/3+13 v(x4)/3+14 v(x5)/3+15 v(x6)/3+16 v(x7)/3+17 i(Vmeasin)+20
+run
+* v(Xmcc1.P)/4+8 v(Xmcc1.G)/4+9
+plot v(xa)/4+10 v(xb)/4+11 0.75-v(x_cin)/4+12 0.75-v(x_cout)/4+13 v(xs)/4+14 i(Vmeasin)+20
 * save i(Vmeasin)
 * plot v(clk) v(rst)+5 v(en)+10 v(out0)+20 v(out1)+25 v(out2)+30 Vmeasin#branch+40
 .endc
