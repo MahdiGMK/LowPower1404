@@ -1,5 +1,5 @@
 module UMull #(
-    parameter  int N = 64,
+    parameter  int N = 16,
     localparam int R = 2 * N
 ) (
     input clk,
@@ -39,7 +39,7 @@ endmodule
 
 
 module UKarat #(
-    parameter  int N = 128,
+    parameter  int N = 16,
     localparam int K = N / 2,
     localparam int R = 2 * N
 ) (

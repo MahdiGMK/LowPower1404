@@ -1,8 +1,8 @@
 read_verilog -sv digital/RNG.v
-read_verilog -sv digital/MCCAdder.v
-read_verilog -sv digital/MCCBench.v
-read_verilog -sv digital/NormalAdder.v
-read_verilog -sv digital/NormalBench.v
+read_verilog -sv digital/UMull.v
+read_verilog -sv digital/KaratMul.v
+read_verilog -sv digital/ShaddMul.v
+read_verilog -sv digital/Bench.v
 
 
 read_verilog -lib yosys/prim_cells.v

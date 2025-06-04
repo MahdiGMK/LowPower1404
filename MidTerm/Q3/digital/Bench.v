@@ -1,8 +1,10 @@
-module Bench (
+module Bench #(
+    localparam int N = 16
+) (
     input clk,
     input rst,
-    output [127:0] a,
-    output [127:0] b,
+    output [N-1:0] a,
+    output [N-1:0] b,
     output strt
 );
     reg [7:0] timer;
@@ -14,7 +16,7 @@ module Bench (
     );
     assign strt = timer == 0;
     always @(posedge clk) begin
-        if (rst || timer == 0) timer <= 130;
+        if (rst || timer == 0) timer <= 30;
         else timer <= timer - 1;
     end
 endmodule

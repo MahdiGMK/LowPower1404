@@ -12,5 +12,4 @@ proc;; memory;; techmap;;
 dfflibmap -liberty yosys/prim_cells.lib
 abc -liberty yosys/prim_cells.lib;;
 
-# write_verilog sender_lwc.v
 write_spice bench.mod

@@ -1,0 +1,42 @@
+.title "Shift & Add CIRC"
+
+* supply voltages
+.global Vss Vdd
+Vgnd Vgnd 0 DC 0
+Vpwr Vpwr 0 DC 3
+* Vss Vss Vpwr DC 0
+* Vdd Vdd 0 DC 3
+Rgnd Vgnd Vss 0.001
+Rpwr Vpwr Vmeasin 0.001
+Vmeasin Vmeasin Vdd DC 0
+
+* simple transistor model
+.MODEL cmosn NMOS LEVEL=1 VT0=0.7 KP=110U GAMMA=0.4 LAMBDA=0.04 PHI=0.7
+.MODEL cmosp PMOS LEVEL=1 VT0=-0.7 KP=50U GAMMA=0.57 LAMBDA=0.05 PHI=0.8
+
+* load design and library
+.include yosys/prim_cells_cmos.mod
+.include bench.mod
+
+* input signals
+Vclk clk 0 PULSE(0 3 1 0.1 0.1 0.8 2)
+Vrst rst 0 PULSE(0 3 0.5 0.1 0.1 2.9 1024)
+
+Xbench clk rst a.0 a.1 a.2 a.3 a.4 a.5 a.6 a.7 a.8 a.9 a.10 a.11 a.12 a.13 a.14 a.15 b.0 b.1 b.2 b.3 b.4 b.5 b.6 b.7 b.8 b.9 b.10 b.11 b.12 b.13 b.14 b.15 strt Bench
+Xshadmul clk rst strt a.0 a.1 a.2 a.3 a.4 a.5 a.6 a.7 a.8 a.9 a.10 a.11 a.12 a.13 a.14 a.15 b.0 b.1 b.2 b.3 b.4 b.5 b.6 b.7 b.8 b.9 b.10 b.11 b.12 b.13 b.14 b.15 res.0 res.1 res.2 res.3 res.4 res.5 res.6 res.7 res.8 res.9 res.10 res.11 res.12 res.13 res.14 res.15 res.16 res.17 res.18 res.19 res.20 res.21 res.22 res.23 res.24 res.25 res.26 res.27 res.28 res.29 res.30 res.31 done ShaddMul
+
+
+.tran 0.1 2048
+* .save i(Vmeasin) v(Vmeasin)
+* .save v(Vmeasin)
+* .probe p(counter)
+* .save counter:power
+.control
+set filetype=ascii
+run
+plot v(a.0)/4+10 v(a.1)/4+11 v(b.0)/4+12 v(b.1)/4+13 v(res.0)/4+14 v(res.1)/4+15 v(strt)/4+16 i(Vmeasin)+20
+* save i(Vmeasin)
+* plot v(clk) v(rst)+5 v(en)+10 v(out0)+20 v(out1)+25 v(out2)+30 Vmeasin#branch+40
+.endc
+
+.end

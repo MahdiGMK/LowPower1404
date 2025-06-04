@@ -14,15 +14,17 @@ module RNG (
     end
 endmodule
 
-module INPGEN (
+module INPGEN #(
+    parameter int N = 16
+) (
     input clk,
     input rst,
-    output [127:0] a,
-    output [127:0] b
+    output [N-1:0] a,
+    output [N-1:0] b
 );
     genvar i;
     generate
-        for (i = 0; i < 128 / 8; i += 1) begin : gen_rng
+        for (i = 0; i < N / 8; i += 1) begin : gen_rng
             wire [7:0] aseed = 8'b01010101 ^ (i * 71269);
             wire [7:0] bseed = 8'b01011010 ^ (i * 190873);
             RNG _a (
